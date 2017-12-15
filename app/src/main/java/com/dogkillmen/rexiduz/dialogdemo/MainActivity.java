@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button mDialogMultipleChoice;
     Button mDialogCustom;
     Button mDialogCustom2;
+    private Button buttonClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mDialogMultipleChoice = (Button) findViewById(R.id.button_dialog_multi_choice);
         mDialogCustom = (Button) findViewById(R.id.button_dialog_custom);
         mDialogCustom2 = (Button) findViewById(R.id.button_dialog_custom2);
+        buttonClick = (Button) findViewById(R.id.buttonClick);
 
 
         mDialogSimple.setOnClickListener(new View.OnClickListener() {
@@ -171,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Check username password
-                        if (username.getText().equals("demo@example.com") &&
-                                password.getText().equals("demo")) {
+                        if (username.getText().toString().equals("admin") &&
+                                password.getText().toString().equals("admin")) {
                             Toast.makeText(getApplicationContext(), "Login success!",
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -230,6 +234,37 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
+            }
+        });
+
+        buttonClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create custom dialog object
+                final Dialog dialog = new Dialog(MainActivity.this);
+                // Include dialog.xml file
+                dialog.setContentView(R.layout.dialog_custom3);
+                // Set dialog title
+                dialog.setTitle("Custom Dialog");
+
+                // set values for custom dialog components - text, image and button
+                TextView text = (TextView) dialog.findViewById(R.id.textDialog);
+                text.setText("Custom dialog Android example.");
+                ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
+                image.setImageResource(R.drawable.ic_launcher_background);
+
+                dialog.show();
+
+                Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
+                // if decline button is clicked, close the custom dialog
+                declineButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Close dialog
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
     }
