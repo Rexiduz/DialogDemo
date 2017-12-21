@@ -1,15 +1,19 @@
 package com.dogkillmen.rexiduz.dialogdemo;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
     Button mDialogCustom;
     Button mDialogCustom2;
     private Button buttonClick;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContext = this;
         mDialogSimple = (Button) findViewById(R.id.button_dialog_simple);
         mDialogList = (Button) findViewById(R.id.button_dialog_list);
         mDialogSingleChoice = (Button) findViewById(R.id.button_dialog_single_choice);
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mDialogCustom = (Button) findViewById(R.id.button_dialog_custom);
         mDialogCustom2 = (Button) findViewById(R.id.button_dialog_custom2);
         buttonClick = (Button) findViewById(R.id.buttonClick);
+        Button buttonClick2 = (Button) findViewById(R.id.buttonClick2);
 
 
         mDialogSimple.setOnClickListener(new View.OnClickListener() {
@@ -267,5 +274,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        buttonClick2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+                String names[] ={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,names);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View convertView = (View)inflater.inflate(R.layout.list_layout, null);
+                ListView lv = (ListView) convertView.findViewById(R.id.list_view1);
+                lv.setAdapter(adapter);
+                alertDialog.setView(convertView);
+                alertDialog.setTitle("List");
+                final AlertDialog ad = alertDialog.show();
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
+                        //Toast.makeText(mContext, position, Toast.LENGTH_LONG).show();
+                        ad.dismiss();
+                    }
+                });
+            }
+        });
+
+
     }
 }

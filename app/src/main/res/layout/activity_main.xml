@@ -110,6 +110,18 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/buttonClick2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonClick"
+                android:layout_marginTop="16dp"
+                android:background="#D74B4C"
+                android:padding="16dp"
+                android:text="ct-dialog-button 4"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
